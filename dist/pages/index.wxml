@@ -1,0 +1,10 @@
+
+  <view class="weui-container">
+    <view class="weui-section">
+      <view class="weui-flex">
+        <button class="weui-btn weui-btn__default" type="default" data-path="convert" bindtap="navigateTo">色值转换器</button>
+        <button class="weui-btn weui-btn__default" type="default" data-path="manage/index" bindtap="navigateTo">收益计算器</button>
+        <button class="weui-btn weui-btn__default" type="default" data-path="game/index" bindtap="navigateTo">消消乐</button>
+      </view>
+    </view>
+  </view>

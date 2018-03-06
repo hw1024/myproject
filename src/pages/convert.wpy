@@ -1,0 +1,130 @@
+<style lang="less">
+  .weui-input {
+    width: 100%;
+    height: 72rpx;
+    line-height: 72rpx;
+    border-radius: 10rpx;
+    font-size: 32rpx;
+    padding: 0 20rpx;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border: 1rpx solid #666666;
+  }
+  .weui-box {
+    margin-bottom: 48rpx;
+    font-size: 32rpx;
+  }
+  .weui-title{
+    font-size: 32rpx;
+    margin-bottom:28rpx;
+  }
+  .weui-form{
+    border: 1rpx solid #333333;
+    padding: 30rpx 40rpx;
+    border-top-left-radius: 10rpx;
+    border-top-right-radius: 10rpx;
+  }
+  .weui-form .weui-rgb__input{
+    margin-right: 40rpx;
+  }
+  .weui-form .weui-btn__area{
+    margin-top: 30rpx;
+  }
+  .weui-form .weui-btn{
+    margin: 0;
+    height: 68rpx;
+    line-height: 68rpx;
+    margin-right: 24rpx;
+  }
+  .weui-result{
+    display:flex;
+    display: -webkit-flex;
+    align-items: center;
+    color: #ff6000;
+    padding: 20rpx;
+    border: 1rpx solid #333333;
+    border-bottom-left-radius: 10rpx;
+    border-bottom-right-radius: 10rpx;
+    border-top: none;
+  }
+  .weui-result .weui-color {
+    width:100rpx;
+    height: 40rpx;
+    margin-right: 20rpx;
+    
+  }
+  .weui-result .weui-color__active {
+    box-shadow:0 0 5rpx 1rpx #999,  
+  }
+</style>
+<template>
+  <view class="weui-container">
+    <view class="weui-section">
+      <view class="weui-box">
+        <view class="weui-title">1、十六进制颜色码转换成RGB颜色值：</view>
+        <form bindsubmit="hexFormSubmit" bindreset="hexFormReset">
+          <view class="weui-form">
+            <view>
+              <input class="weui-input" name="hex" placeholder="输入十六进制颜色码（#666666）" value="" />
+            </view>
+            <view class="weui-btn__area weui-flex">
+              <button class="weui-btn weui-btn__default" type="default" formType="submit">转换</button>
+              <button class="weui-btn weui-btn__default" type="default" formType="reset">重置</button>
+            </view>
+          </view>
+          <view class="weui-result">结果：<text class="weui-color {{ rgbVal ? 'weui-color__active' : '' }}" style="background-color:{{ rgbVal }}"></text>{{ rgbVal }}</view>
+        </form>
+      </view>
+      <view class="weui-box">
+        <view class="weui-title">2、RGB颜色值转换成十六进制颜色码：</view>
+        <form bindsubmit="rgbFormSubmit" bindreset="rgbFormReset">
+          <view class="weui-form">
+            <view class="weui-flex">
+              <input class="weui-input weui-rgb__input" name="rgbR" placeholder="R" value="" />
+              <input class="weui-input weui-rgb__input" name="rgbG" placeholder="G" value="" />
+              <input class="weui-input" name="rgbB" placeholder="B" value="" />
+            </view>
+            <view class="weui-btn__area weui-flex">
+              <button class="weui-btn weui-btn__default" type="default" formType="submit">转换</button>
+              <button class="weui-btn weui-btn__default" type="default" formType="reset">重置</button>
+            </view>
+          </view>
+          <view class="weui-result">结果：<text class="weui-color {{ hexVal ? 'weui-color__active' : '' }}" style="background-color:{{ hexVal }}"></text>{{ hexVal }}</view>
+        </form>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Convert extends wepy.page {
+    config = {
+      navigationBarTitleText: '色值转换'
+    }
+
+    data = {
+      rgbVal: '',
+      hexVal: ''
+    }
+
+    methods = {
+      hexFormSubmit(e) {
+        const hexVal = e.detail.value.hex || '#000000'
+        const hexToRgb = hex => `rgb(${hex.slice(1).match(/.{2}/g).map(x => parseInt(x, 16)).join()})`
+        this.rgbVal = hexToRgb(hexVal)
+      },
+      hexFormReset() {
+        this.rgbVal = ''
+      },
+      rgbFormSubmit(e) {
+        const [rgbRVal, rgbGVal, rgbBVal] = [Number(e.detail.value.rgbR), Number(e.detail.value.rgbG), Number(e.detail.value.rgbB)]
+        const rgbToHex = (r, g, b) => `#${((r << 16) + (g << 8) + b).toString(16).padStart(6, '0')}`
+        this.hexVal = rgbToHex(rgbRVal, rgbGVal, rgbBVal)
+      },
+      rgbFormReset() {
+        this.hexVal = ''
+      }
+    }
+  }
+</script>

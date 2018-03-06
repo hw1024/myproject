@@ -1,0 +1,37 @@
+
+  <view class="weui-container">
+    <view class="weui-section">
+      <view class="weui-box">
+        <view class="weui-title">1、十六进制颜色码转换成RGB颜色值：</view>
+        <form bindsubmit="hexFormSubmit" bindreset="hexFormReset">
+          <view class="weui-form">
+            <view>
+              <input class="weui-input" name="hex" placeholder="输入十六进制颜色码（#666666）" value=""/>
+            </view>
+            <view class="weui-btn__area weui-flex">
+              <button class="weui-btn weui-btn__default" type="default" formType="submit">转换</button>
+              <button class="weui-btn weui-btn__default" type="default" formType="reset">重置</button>
+            </view>
+          </view>
+          <view class="weui-result">结果：<text class="weui-color {{ rgbVal ? 'weui-color__active' : '' }}" style="background-color:{{ rgbVal }}"/>{{ rgbVal }}</view>
+        </form>
+      </view>
+      <view class="weui-box">
+        <view class="weui-title">2、RGB颜色值转换成十六进制颜色码：</view>
+        <form bindsubmit="rgbFormSubmit" bindreset="rgbFormReset">
+          <view class="weui-form">
+            <view class="weui-flex">
+              <input class="weui-input weui-rgb__input" name="rgbR" placeholder="R" value=""/>
+              <input class="weui-input weui-rgb__input" name="rgbG" placeholder="G" value=""/>
+              <input class="weui-input" name="rgbB" placeholder="B" value=""/>
+            </view>
+            <view class="weui-btn__area weui-flex">
+              <button class="weui-btn weui-btn__default" type="default" formType="submit">转换</button>
+              <button class="weui-btn weui-btn__default" type="default" formType="reset">重置</button>
+            </view>
+          </view>
+          <view class="weui-result">结果：<text class="weui-color {{ hexVal ? 'weui-color__active' : '' }}" style="background-color:{{ hexVal }}"/>{{ hexVal }}</view>
+        </form>
+      </view>
+    </view>
+  </view>
